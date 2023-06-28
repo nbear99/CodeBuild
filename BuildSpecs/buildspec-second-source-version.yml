@@ -1,0 +1,19 @@
+version: 0.2
+phases:
+  build:
+    commands:
+      - printenv 
+      - env 
+      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION
+      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION_CC
+      - echo $CODEBUILD_SOURCE_REPO_URL
+      - echo $CODEBUILD_SOURCE_REPO_URL_CC
+      - echo $CODEBUILD_SOURCE_VERSION
+      - echo $CODEBUILD_SOURCE_VERSION_CC
+      - echo $CODEBUILD_SRC_DIR
+      - echo $CODEBUILD_SRC_DIR_CC
+      - CODEBUILD_RESOLVED_SOURCE_VERSION_FOO=$(cd $CODEBUILD_SRC_DIR && git rev-parse --verify HEAD)
+      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION_FOO
+      - CODEBUILD_RESOLVED_SOURCE_VERSION_FOO=$(cd $CODEBUILD_SRC_DIR_CC && git rev-parse --verify HEAD)
+      - echo $CODEBUILD_RESOLVED_SOURCE_VERSION_FOO
+

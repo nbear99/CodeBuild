@@ -1,0 +1,84 @@
+version: 0.2
+env:
+  git-credential-helper: yes
+phases:
+  install:
+    # runtime-versions:
+    #   nodejs: 12
+      # name: version
+    commands:
+      - codebuild-breakpoint
+      - ls -al /bin/bash
+    #  - git clone https://github.com/postmodern/ruby-install.git
+    #  - cd ruby-install && make install && ruby-install 2.7.7
+    #  - /opt/rubies/ruby-2.7.7/bin/ruby --version
+    #   - npm i npm@8.3.1 -g
+    #   - pip install --upgrade pip
+    #   - pip install --upgrade awscli
+    #   # - command
+    #   - node -v
+    #   - npm -v
+    #   - yarn -v
+    
+  build:
+    commands:
+      - echo "$SHELL"
+      - echo "${BASH_VERSION}"
+      - ISTIO_UPGRADE_VERSION="1.16.2-tetratefips-v0-distroless"
+      - ISTIO_UPGRADE_VERSION2=$(ls -al)
+      - echo $ISTIO_UPGRADE_VERSION
+      - echo $ISTIO_UPGRADE_VERSION2
+      -   IFS="-" read -a TMP_ARRAY <<< "$ISTIO_UPGRADE_VERSION";
+        echo "Array elements:";
+        for element in "${TMP_ARRAY[@]}"; do
+          echo "$element";
+        done;
+        TMP_ARRAY_NEW=("${TMP_ARRAY[@]}");
+        for element in "${TMP_ARRAY_NEW[@]}"; do
+          echo "$element";
+        done;
+        STRING_TMP=$ISTIO_UPGRADE_VERSION;
+        STRING_TMP_NEW=$STRING_TMP;
+        echo the number of TMP_ARRAY itmes ${#TMP_ARRAY[@]};
+        echo the number of TMP_ARRAY_NEW itmes ${#TMP_ARRAY_NEW[@]};
+        echo STRING_TMP $STRING_TMP;
+        echo STRING_TMP_NEW $STRING_TMP_NEW;
+        echo element $element;
+        echo all  ${TMP_ARRAY_NEW[@]};
+        allThreads=(1 2 4 8 16 32 64 128);
+        echo allThreads $allThreads;
+        export;
+        #echo the number of $allThreads ${#$allThreads[@]};
+
+      - 
+        echo the number of TMP_ARRAY itmes ${#TMP_ARRAY[@]};
+        echo the number of TMP_ARRAY_NEW itmes ${#TMP_ARRAY_NEW[@]};
+        echo STRING_TMP $STRING_TMP;
+        echo STRING_TMP_NEW $STRING_TMP_NEW;
+        echo element $element;
+        echo all  ${TMP_ARRAY_NEW[@]};
+        echo allThreads $allThreads;
+        export;
+        #echo the number  of $allThreads ${#$allThreads[@]};
+      
+#   pre_build:
+#     commands:
+#       - codebuild-breakpoint
+#     #   - sleep 60
+#       - yum install stress -y
+
+#     #   - aa
+#     #   - yarn install
+#     #   - npm install
+#   build:
+#     commands:
+#       - stress --cpu 8 --io 8 --vm 8 --vm-bytes 128M --timeout 300s
+#     #   - sleep 300
+#       - SomeCommand ; rtn=$? #save exit value of the command
+#       - if [ $rtn -eq 0 ]; then  echo "success"; else  echo "fail" && sleep 300 && MakeFail; fi 
+
+    #   - npm run build
+      # - command
+#   post_build:
+#     commands:
+#       - aws s3 sync ./dist $S3_BUCKET

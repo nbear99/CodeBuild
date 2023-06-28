@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - echo BUILD_ID $BUILD_ID
+      - echo REPOSITORY_URI2 $REPOSITORY_URI2
+      - echo sub2
+      - ls -al
+      - cat buildspec.yaml
+artifacts:
+  files:
+    - 'package.json'
+  name: 'package.zip'
+  discard-paths: false

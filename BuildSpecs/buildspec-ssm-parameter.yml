@@ -1,0 +1,37 @@
+version: 0.2
+#env:
+  #variables:
+     # key: "value"
+     # key: "value"
+  #parameter-store:
+     # key: "value"
+     # key: "value"
+  #secrets-manager:
+     # key: secret-id:json-key:version-stage:version-id
+     # key: secret-id:json-key:version-stage:version-id
+  #exported-variables:
+     # - variable
+     # - variable
+  #git-credential-helper: yes
+#batch:
+  #fast-fail: true
+  #build-list:
+  #build-matrix:
+  #build-graph:
+phases:
+  build:
+    commands:
+      aws --version;
+       result0=$(aws ssm get-parameters --with-decryption --names "/a205257/cicd/Amazon-Linux2-Golden-AMI" --query 'Parameters[0].Value' --output text);
+       echo "0" $result0 "end";
+       result1=$(aws ssm get-parameters --with-decryption --names "/a205257/cicd/Amazon-Linux2-Golden-AMI:1" --query 'Parameters[0].Value' --output text);
+       echo "1" $result1 "end";
+       result2=$(aws ssm get-parameters --with-decryption --names "/a205257/cicd/Amazon-Linux2-Golden-AMI:2" --query 'Parameters[0].Value' --output text);
+       echo "2" $result2 "end";
+       result0=$(aws ssm get-parameters --with-decryption --names "/a205257/cicd/Amazon-Linux2-Golden-AMI");
+       echo "0" $result0 "end";
+       result1=$(aws ssm get-parameters --with-decryption --names "/a205257/cicd/Amazon-Linux2-Golden-AMI:1");
+       echo "1" $result1 "end";
+       result2=$(aws ssm get-parameters --with-decryption --names "/a205257/cicd/Amazon-Linux2-Golden-AMI:2" );
+       echo "2" $result2 "end";
+

@@ -1,0 +1,28 @@
+version: 0.2
+phases:
+  build:
+    commands:
+      - echo 'Starting';
+        COMMAND_EXIT=0;
+      - |
+        for i in 0 1 2 4 8 16
+        do 
+          sleep $i;
+          ### Modify code here ###
+          ls -al $i;
+          # aws cloudfront create-invalidation <your arguments>;
+          ################## 
+          COMMAND_EXIT=${?}
+          if [[ $COMMAND_EXIT -eq 0 ]];
+          then
+            break;
+          fi
+        done
+        if [[ $COMMAND_EXIT -ne 0 ]];
+        then
+          echo "CloudFront Invalidation Failed.  Exit Code $COMMAND_EXIT";
+          exit $COMMAND_EXIT;
+        else
+          echo "CloudFront Invalidation Succeeded.  Exit Code $COMMAND_EXIT";
+        fi
+

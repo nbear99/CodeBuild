@@ -1,0 +1,11 @@
+version: 0.2
+phases:
+  pre_build:
+    commands:
+      - echo Entered the pre_build phase...
+      - echo "Hello World" > /tmp/hello-world
+      - codebuild-breakpoint
+  build:
+    commands:
+      - ls -al
+

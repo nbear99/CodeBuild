@@ -1,0 +1,24 @@
+version: 0.2
+env:
+  variables:
+    API_ECR_REPO: repo1
+    QUEUE_SCHEDULER_ECR_REPO: repo1
+batch:
+  fast-fail: false
+  build-list:
+    - identifier: build1
+      buildspec: BuildSpecs/buildspec-batch-sub1.yml
+      ignore-failure: false
+      env: 
+        variables:
+          BUILD_ID: build1
+          REPOSITORY_URI2: "${ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/$IMAGE_NAME"
+    - identifier: build2
+      buildspec: BuildSpecs/buildspec-batch-sub2.yml
+      env: 
+        variables:
+          BUILD_ID: build2
+          REPOSITORY_URI2: "${ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/$IMAGE_NAME-qa"
+    #   depend-on:
+    #     - build1
+        

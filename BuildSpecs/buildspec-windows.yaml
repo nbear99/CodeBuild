@@ -1,0 +1,39 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo "iallnst"
+    #   - Invoke-WebRequest -OutFile nodejs.zip -UseBasicParsing "https://nodejs.org/dist/v16.18.0/node-v16.18.0-win-x64.zip"
+    #   - Expand-Archive nodejs.zip -DestinationPath C:\
+    #   - Rename-Item "C:\node-v16.18.0-win-x64" c:\nodejs
+    #   - $env:Path += ';C:\nodejs';
+    #   # - $env:Path = 'C:\nodejs;' + $env:Path
+    #   - node.exe -v
+  pre_build:
+    commands:
+      - echo "prebuild"
+    #   - New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+    #   - New-Item -ItemType Junction -Path C:\build -Value $Env:CODEBUILD_SRC_DIR
+    #   - cd C:\build
+    #   - nuget.exe restore
+  build:
+    commands:
+      - Invoke-WebRequest -OutFile nodejs.zip -UseBasicParsing "https://nodejs.org/dist/v16.18.0/node-v16.18.0-win-x64.zip"
+      - Expand-Archive nodejs.zip -DestinationPath C:\
+      - Rename-Item "C:\node-v16.18.0-win-x64" c:\nodejs
+    #   - $env:Path += ';C:\nodejs';
+    #   - $env:Path = 'C:\nodejs;' + $env:Path
+    #   - set PATH=C:\nodejs;%PATH%
+      - C:\nodejs\node.exe -v
+      - New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+      - New-Item -ItemType Junction -Path C:\build -Value $Env:CODEBUILD_SRC_DIR
+      - cd C:\build
+      - nuget.exe restore
+      - msbuild SelectCoder.sln /p:Configuration=$Env:CONFIGURATION_WEBFORMS /p:OutDir=dist_webforms /p:DeployOnBuild=true
+      - msbuild SelectCoder.sln /p:Configuration=$Env:CONFIGURATION_MVC /p:OutDir=dist_mvc /p:DeployOnBuild=true
+artifacts:
+  files:
+    - 'SelectCoder.WebForms\publish\$Env:CONFIGURATION_WEBFORMS\**\*'
+    - 'SelectCoder.WebApp\publish\$Env:CONFIGURATION_MVC\**\*'
+    - appspec.yml
+  base-directory: 'C:\build'

@@ -1,0 +1,13 @@
+version: 0.2
+phases:
+  install:
+    commands:
+     - echo Entered the pre_build phase...
+     - echo "Hello World" > /tmp/hello-world
+     - codebuild-breakpoint
+     - /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &>/var/log/docker.log &
+     - timeout 30 sh -c "until docker info; do echo .; sleep 1; done"
+  build:
+    commands:
+      - cat /var/log/docker.log
+

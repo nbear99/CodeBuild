@@ -1,0 +1,16 @@
+version: 0.2
+phases:
+  build:
+    commands:
+      - echo BUILD_ID $BUILD_ID
+      - echo REPOSITORY_URI2 $REPOSITORY_URI2
+      - echo sub1
+      - ls -al
+      - cat buildspec.yaml
+      - echo "add contents" >> buildspec.yaml
+      - cat buildspec.yaml
+artifacts:
+  files:
+    - 'buildspec.yaml'
+  name: 'buildspec.zip'
+  discard-paths: false

@@ -1,0 +1,34 @@
+version: 0.2
+batch:
+  build-graph:
+    - identifier: build1
+      buildspec: |
+        version: 0.2
+        phases:
+          build:
+            commands:
+              - echo build1
+              - ls -al
+              - ls -al ../
+              - echo "add contents" >> buildspec.yaml
+        artifacts:
+          files:
+            - ' **/*'
+          name: 'build1.zip'
+          discard-paths: false
+    - identifier: build2
+      buildspec: |
+        version: 0.2
+        phases:
+          build:
+            commands:
+              - echo build2
+              - ls -al
+              - ls -al ../
+        artifacts:
+          files:
+            - ' **/*'
+          name: 'build2.zip'
+          discard-paths: false
+      depend-on:
+        - build1
